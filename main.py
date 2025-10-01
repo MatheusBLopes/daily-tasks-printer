@@ -48,10 +48,8 @@ def imprimir_lista(lista):
         p.text(f"{data_hora}\n")
         p.set(align='left', width=1, height=1)
 
-        for item in lista:
-            p.text(f"[ ] {item['tarefa']}\n")
-            if item.get("avaliar", False):
-                p.text("[ ] Ruim   [ ] Médio   [ ] Bom\n")
+        for tarefa in lista:
+            p.text(f"[ ] {tarefa}\n")
         p.text("\n")
         p.cut()
     except Exception as e:
@@ -136,11 +134,7 @@ class JanelaTarefas(QWidget):
         for i in range(self.lista.count()):
             item = self.lista.item(i)
             if item.checkState():
-                avaliar = QMessageBox.question(
-                    self, "Avaliação", f"Incluir avaliação para '{item.text()}'?",
-                    QMessageBox.Yes | QMessageBox.No
-                ) == QMessageBox.Yes
-                lista_impressao.append({"tarefa": item.text(), "avaliar": avaliar})
+                lista_impressao.append(item.text())
 
         if not lista_impressao:
             QMessageBox.information(self, "Nenhuma Selecionada", "Nenhuma tarefa selecionada.")
